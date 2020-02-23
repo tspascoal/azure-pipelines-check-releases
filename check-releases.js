@@ -27,7 +27,6 @@ function run(organizationUrl, projectName) {
     return __awaiter(this, void 0, void 0, function* () {
         const webApi = yield common.getWebApi(organizationUrl);
         const coreApiObject = yield webApi.getCoreApi();
-        const taskAgentApi = yield webApi.getTaskAgentApi();
         const releaseApi = yield webApi.getReleaseApi();
         const buildApi = yield webApi.getBuildApi();
         common.heading("Getting projects");
@@ -66,22 +65,27 @@ function run(organizationUrl, projectName) {
                                 let buildId = Number.parseInt(artifact.definitionReference.version.id);
                                 let buildNumber = artifact.definitionReference.version.name;
                                 let build = yield buildApi.getBuild(buildProjectId, buildId);
-                                if (build === null) {
-                                    printBuildStatus(false, artifact, "Missing Pipeline");
+                                if (!build) {
+                                    printBuildStatus(false, artifact, "Missing Pipeline run");
                                 }
-                                const hasArtifacts = (yield ((_a = (yield buildApi.getArtifacts(buildProjectId, buildId))) === null || _a === void 0 ? void 0 : _a.length)) > 0;
-                                // If being retained, just continue
-                                if (build.retainedByRelease) {
-                                    printBuildStatus(true, artifact, "Retaiend by Release");
-                                }
-                                else if (build.keepForever) {
-                                    printBuildStatus(true, artifact, "Manual Retention");
+                                else if (build.deleted === true) {
+                                    printBuildStatus(false, artifact, "Pipeline Run is (soft) deleted");
                                 }
                                 else {
-                                    printBuildStatus(false, artifact, "Not Being Retained");
-                                }
-                                if (hasArtifacts == false) {
-                                    printBuildStatus(false, artifact, "No Artifacts");
+                                    const hasArtifacts = (yield ((_a = (yield buildApi.getArtifacts(buildProjectId, buildId))) === null || _a === void 0 ? void 0 : _a.length)) > 0;
+                                    // If being retained, just continue
+                                    if (build.retainedByRelease) {
+                                        printBuildStatus(true, artifact, "Retaiend by Release");
+                                    }
+                                    else if (build.keepForever) {
+                                        printBuildStatus(true, artifact, "Manual Retention");
+                                    }
+                                    else {
+                                        printBuildStatus(false, artifact, "Not Being Retained");
+                                    }
+                                    if (hasArtifacts == false) {
+                                        printBuildStatus(false, artifact, "No Artifacts");
+                                    }
                                 }
                             }
                         }

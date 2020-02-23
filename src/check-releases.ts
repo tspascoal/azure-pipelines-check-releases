@@ -82,23 +82,25 @@ export async function run(organizationUrl: string, projectName: string) {
 
                             let build = await buildApi.getBuild(buildProjectId, buildId);
 
-                            if (build === null) {
-                                printBuildStatus(false, artifact, "Missing Pipeline");
-                            }
-
-                            const hasArtifacts = await (await buildApi.getArtifacts(buildProjectId, buildId))?.length > 0;
-
-                            // If being retained, just continue
-                            if (build.retainedByRelease) {
-                                printBuildStatus(true, artifact,"Retaiend by Release");
-                            } else if (build.keepForever) {
-                                printBuildStatus(true, artifact, "Manual Retention");
+                            if (!build) {
+                                printBuildStatus(false, artifact, "Missing Pipeline run");
+                            } else if(build.deleted === true) {
+                                printBuildStatus(false, artifact, "Pipeline Run is (soft) deleted");
                             } else {
-                                printBuildStatus(false, artifact, "Not Being Retained");
-                            }
+                                const hasArtifacts = await (await buildApi.getArtifacts(buildProjectId, buildId))?.length > 0;
 
-                            if(hasArtifacts == false) {
-                                printBuildStatus(false, artifact, "No Artifacts");
+                                // If being retained, just continue
+                                if (build.retainedByRelease) {
+                                    printBuildStatus(true, artifact, "Retained by Release");
+                                } else if (build.keepForever) {
+                                    printBuildStatus(true, artifact, "Manual Retention");
+                                } else {
+                                    printBuildStatus(false, artifact, "Not Being Retained");
+                                }
+
+                                if (hasArtifacts == false) {
+                                    printBuildStatus(false, artifact, "No Artifacts");
+                                }
                             }
                         }
                     }

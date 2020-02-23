@@ -1,6 +1,6 @@
 {
   "name": "azure-pipelines-check-releases",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Checks if releases with a deployed stage are retaining their referenced build(s).",
   "main": "check-releases.js",
   "scripts": {
