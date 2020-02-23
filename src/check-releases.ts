@@ -22,7 +22,6 @@ export async function run(organizationUrl: string, projectName: string) {
     const webApi: nodeApi.WebApi = await common.getWebApi(organizationUrl);
 
     const coreApiObject: CoreApi.CoreApi = await webApi.getCoreApi();
-    const taskAgentApi = await webApi.getTaskAgentApi();
     const releaseApi = await webApi.getReleaseApi();
     const buildApi = await webApi.getBuildApi();
 
