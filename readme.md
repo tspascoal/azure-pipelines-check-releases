@@ -38,3 +38,4 @@ node check-releases.js --org http://dev.azure.com/REPLACEWITHORGNAME [--project 
 * If you redeploy older releases, it inspects those rather the most new releases (which have been supersed by the redeploy)
   * It should also reconsider the newer ones, but that option has not been taken for the sake of simplicity.
 * It doesn't do any pagination, so if you have a high amount of data (team projects or deployments of a given release) some data may be missed. This can only be fixed after the [Azure DevOps node API supports continuation tokens](https://github.com/microsoft/azure-devops-node-api/).
+* It doesn't inspect other retention lease types.
