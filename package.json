@@ -1,0 +1,25 @@
+{
+  "name": "azure-pipelines-check-releases",
+  "version": "0.5.0",
+  "description": "Checks if releases with a deployed stage are retaining their referenced build(s).",
+  "main": "check-releases.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc --outdir . --declarationDir typings"
+  },
+  "author": "Tiago Pascoal",
+  "license": "MIT",
+  "dependencies": {
+    "azure-devops-node-api": "^10.0.0",
+    "colors": "^1.4.0",
+    "yargs": "^15.1.0"
+  },
+  "repository": {
+    "type": "github",
+    "url": "azure-pipelines-check-releases"
+  },
+  "devDependencies": {
+    "@types/yargs": "^15.0.1",
+    "@types/node": "^13.1.8"
+  }
+}
