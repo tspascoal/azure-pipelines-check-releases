@@ -19,7 +19,7 @@
     "url": "azure-pipelines-check-releases"
   },
   "devDependencies": {
-    "@types/yargs": "^15.0.1",
+    "@types/yargs": "^15.0.4",
     "@types/node": "^13.1.8"
   }
 }
