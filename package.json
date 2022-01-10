@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "azure-devops-node-api": "^11.0.1",
-    "colors": "^1.4.0",
+    "colors": "^1.4.2",
     "yargs": "^15.4.0"
   },
   "repository": {
